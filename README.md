@@ -1,53 +1,48 @@
 # Sunset Client
 
-Standalone Minecraft launcher in C++17. GLFW 3.4 + Dear ImGui, native **X11 and Wayland**
-(chosen at runtime), animated fire/sunset art, **cracked (offline)** and **online (Microsoft)** accounts.
-
-## Dependencies
-
-Arch:
-```
-sudo pacman -S --needed base-devel cmake curl wayland wayland-protocols libxkbcommon \
-  libx11 libxrandr libxinerama libxcursor libxi mesa unzip jdk21-openjdk
-```
-Ubuntu / Debian:
-```
-sudo apt install build-essential cmake pkg-config libcurl4-openssl-dev libwayland-dev \
-  wayland-protocols libxkbcommon-dev xorg-dev libgl1-mesa-dev unzip openjdk-21-jre
-```
-(GLFW, ImGui and nlohmann/json are downloaded by CMake automatically.)
-
-## Build and run
-
-```
-cmake -S . -B build
-cmake --build build -j
-./build/sunset-client              # Wayland if available, else X11
-./build/sunset-client --x11        # force X11 / XWayland
-./build/sunset-client --wayland    # force Wayland
-```
+A lightweight, standalone Minecraft: Java Edition launcher for Linux, written in C++.
+Native **X11 and Wayland** support, animated sunset/fire interface, and two account modes.
 
 ## Features
 
-- Cracked accounts: any username, vanilla-compatible offline UUID, no login.
-- Online accounts: Microsoft device-code login (Xbox Live, XSTS, Minecraft services), tokens auto-refresh.
-- Downloads versions, libraries, assets and natives (8 parallel downloads), then launches the game.
-- Auto-picks the right JDK per version from `/usr/lib/jvm` (Java 8/17/21...), or set your own path.
-- Game keeps running if you close the launcher. Game output goes to `latest-game.log` and the log panel.
-- All data in `~/.local/share/sunset-client/` (`config.json`, `versions/`, `libraries/`, `assets/`, `game/`).
+- **Microsoft accounts**: sign in with the device-code flow (Xbox Live, XSTS, Minecraft services). Tokens refresh automatically.
+- **Offline accounts**: play singleplayer or on offline-mode servers with any username.
+- Downloads game versions, libraries, assets and natives, then launches the game.
+- Picks the right Java version per Minecraft version automatically, or use your own path.
+- Adjustable RAM and extra JVM arguments.
+- Runs on both X11 and Wayland, chosen at runtime.
 
-## Microsoft login setup (one time)
+## Requirements
 
-Online login needs your own Azure app id:
+- Linux x86_64
+- OpenGL 3.3 capable GPU and drivers
+- `libcurl`, `unzip`
+- A Java runtime (Java 21 recommended: `jdk21-openjdk` on Arch, `openjdk-21-jre` on Debian/Ubuntu)
 
-1. portal.azure.com, App registrations, New registration.
-2. Supported account types: "Personal Microsoft accounts only".
-3. Authentication, Advanced settings, **Allow public client flows = Yes**.
-4. Paste the Application (client) ID into Advanced, Azure client ID, in the launcher.
+## Usage
 
-New app ids may also need Mojang's approval before the Minecraft services call works
-(Mojang's third-party API access form). Until then, offline accounts work fine.
+```
+chmod +x sunset-client
+./sunset-client              # Wayland if available, otherwise X11
+./sunset-client --x11        # force X11
+./sunset-client --wayland    # force Wayland
+```
 
-## Not included yet
+Pick or add an account, choose a version, press **PLAY**.
 
-Fabric/Forge profiles (`inheritsFrom`), mod management, skins, auto-update.
+Data is stored in `~/.local/share/sunset-client/`.
+
+## Privacy and authentication
+
+- Microsoft sign-in happens on Microsoft's own page (microsoft.com/link). The launcher never sees your password.
+- Tokens are stored locally in `config.json` (file permissions `600`) and sent only to Microsoft, Xbox Live and Mojang services.
+- Sunset Client does not collect telemetry, show ads, or contact any other server.
+- Game files are downloaded from Mojang's official servers.
+
+## Not affiliated
+
+Sunset Client is an independent project. It is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Studios.
+
+## Releases
+
+Download the latest binary from the [Releases](../../releases) page.
