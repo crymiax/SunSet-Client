@@ -1,3 +1,9 @@
+# HEY PLEASE NOTE THIS
+
+# ORIGINAL CLIENT ISN'T OUT YET YOU CAN USE THE FABRIC 1.21.11 MOD IN THE RELEASES
+# STILL WAITING FOR MY AZURE ID TO GET APPROVED
+
+
 # Sunset Client
 
 A lightweight, standalone Minecraft: Java Edition launcher for Linux, written in C++.
